@@ -2,12 +2,18 @@
 set -e
 
 rm -rf ./.env || true
-echo DATABASE_URL=postgres://localhost/graphql-app-example > .env
+echo DATABASE_URL=postgres://localhost/graphql_app_example > .env
 
-dropdb graphql-app-example || true
-createdb graphql-app-example
+echo "dropdb graphql_app_example"
+dropdb graphql_app_example || true
+echo "createdb graphql_app_example"
+createdb graphql_app_example
+echo "diesel migration run"
 diesel migration run
 
-dropdb graphql-app-example-test || true
-createdb graphql-app-example-test
-DATABASE_URL=postgres://localhost/graphql-app-example-test diesel migration run
+echo "dropping test db..."
+dropdb graphql_app_example_test || true
+echo "creating test db..."
+createdb graphql_app_example_test
+echo "migrating test db..."
+DATABASE_URL=postgres://localhost/graphql_app_example_test diesel migration run

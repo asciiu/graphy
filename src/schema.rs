@@ -1,14 +1,21 @@
 table! {
-    users (id) {
-        id -> Integer,
+    countries (id) {
+        id -> Int4,
         name -> Text,
-        country_id -> Integer,
     }
 }
 
 table! {
-    countries (id) {
-        id -> Integer,
+    users (id) {
+        id -> Int4,
         name -> Text,
+        country_id -> Int4,
     }
 }
+
+joinable!(users -> countries (country_id));
+
+allow_tables_to_appear_in_same_query!(
+    countries,
+    users,
+);
